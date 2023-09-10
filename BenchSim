@@ -1,0 +1,104 @@
+if game.PlaceId == 14434341882 then
+ 
+    local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+    local Window = OrionLib:MakeWindow({Name = "BaconBoss Hub | Bench Press Simulator", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
+
+    _G.click = true
+    _G.win = true
+    _G.segg = "BasicEgg"
+    _G.egg = true
+    _G.rb = true
+
+    function click()
+         while _G.click == true do
+           game:GetService("ReplicatedStorage").Remotes.ClickForStrength:InvokeServer()
+           wait(0.0000000000000000000000000000000000000000000000000001)
+        end
+    end
+
+    function win()
+         while _G.win == true do
+            local args = {
+                [1] = true
+            }
+            
+            game:GetService("ReplicatedStorage").Remotes.CompetitionEnded:FireServer(unpack(args))
+            wait(0.1)
+        end
+    end
+
+    function egg()
+         while _G.egg == true do
+          game:GetService("ReplicatedStorage").Remotes.BuyPetEgg:InvokeServer(_G.segg,1)
+          wait(0.01)
+        end
+    end
+
+    function rb()
+         while _G.rb == true do
+         game:GetService("ReplicatedStorage").Remotes.Rebirth:FireServer()
+         wait(1)
+        end
+    end
+
+    local MainTab = Window:MakeTab({
+        Name = "Main",
+        Icon = "rbxassetid://4483345998",
+        PremiumOnly = false
+    })
+
+    local EggTab = Window:MakeTab({
+        Name = "Egg",
+        Icon = "rbxassetid://4483345998",
+        PremiumOnly = false
+    })
+
+    MainTab:AddToggle({
+        Name = "Auto Train",
+        Default = false,
+        Callback = function(Value)
+            _G.click = Value
+            click()
+        end    
+    })
+
+    MainTab:AddLabel("Note: Only Work If You Have Enough Strenght")
+    MainTab:AddLabel("Spam E For Mutilip Win")
+
+    MainTab:AddToggle({
+        Name = "Instant Win",
+        Default = false,
+        Callback = function(Value)
+            _G.win = Value
+            win()
+        end    
+    })
+
+    MainTab:AddToggle({
+        Name = "Auto Rebirth",
+        Default = false,
+        Callback = function(Value)
+            _G.rb = Value
+            rb()
+        end    
+    })
+
+    EggTab:AddToggle({
+        Name = "Auto Open",
+        Default = false,
+        Callback = function(Value)
+            _G.egg = Value
+            egg()
+        end    
+    })
+
+    EggTab:AddDropdown({
+        Name = "Select Egg",
+        Default = "BasicEgg",
+        Options = {"BasicEgg", "LeafEgg", "ForestEgg", "SandEgg", "SandstoneEgg", "TreasureEgg", "FrozenEgg", "FrostEgg", "CrystalEgg", "MeteorEgg", "ExplosiveEgg", "BombasticEgg"},
+        Callback = function(Value)
+            _G.segg = Value
+        end    
+    })
+
+end
